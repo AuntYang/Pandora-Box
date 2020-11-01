@@ -1,0 +1,170 @@
+﻿<Window x:Class="Pandora_Box.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:controls="https://handyorg.github.io/handycontrol"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Pandora_Box"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Keyboard.KeyDown="txt_Pwd_KeyDown"
+        MouseMove="Window_MouseMove"
+        Title="LoginWindow" Height="450" Width="850" Visibility="Visible" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--图像Grid-->
+        <Border
+            Grid.Column="0"
+            BorderBrush="Black"
+            Style="{StaticResource BorderRegion}">
+            <Border Background="{DynamicResource PrimaryBrush}">
+                <!--大图像-->
+                <hc:ImageBlock
+                    Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\咖啡买卖.png"
+                />
+            </Border>
+        </Border>
+        
+        <!--消息通知容器-->
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
+            <StackPanel controls:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
+        </ScrollViewer>
+
+        <!--登录Grid板块-->
+        <Grid Grid.Column="1">
+            <!--设置行高（倍距）-->
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="2*"/>
+                <RowDefinition  Height="*"/>
+                <RowDefinition  Height="1.8*"/>
+            </Grid.RowDefinitions>
+            
+            <!--包含图标stackpanel和文字textblock的stackpanel（有利于布局）-->
+            <StackPanel Orientation="Vertical" >
+                <!--登录板块图标-->
+                <StackPanel Margin="25"  Width="210" Height="100" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!--学院院徽-->
+                    <Border
+                    Width="100"
+                    Height="100"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    >
+                        <Image
+                        Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\院徽.png"
+                         />
+                    </Border>
+                    <!--分割线-->
+                    
+                    <hc:Divider LineStrokeThickness="2" LineStroke="{DynamicResource WarningBrush}" Orientation="Vertical" MaxHeight="60"/>
+                    <!--新大陆图标-->
+                    <Border
+                    Width="100"
+                    Height="100"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    >
+                        <Image
+                        Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\新大陆logo.png"
+                           />
+                    </Border>
+                </StackPanel>
+                <!--标题文字-->
+                <TextBlock 
+                        Margin="-15"
+                        Text="登录到Pandora-Box" 
+                        Style="{StaticResource TextBlockLargeBold}"/>
+            </StackPanel>
+            
+            <!--账号密码框Stackpanel-->
+            <StackPanel Grid.Row="1"  
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!--账号框-->
+                <TextBox 
+                    Name="username"
+                    Width="200" 
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto"
+                    materialDesign:HintAssist.Hint="请输入账号"
+                    Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                    />
+                <!--密码框-->
+                <PasswordBox 
+                    Name="password"
+                    BorderBrush="Black"
+                    Margin="0,12,0,0"
+                    hc:InfoElement.Necessary="True" 
+                    Style="{StaticResource MaterialDesignOutlinedPasswordFieldPasswordBox}"
+                    materialDesign:HintAssist.Hint="请输入密码"
+                    />
+            </StackPanel>
+            
+            <!--按钮Stackpanel-->
+            <StackPanel  Grid.Row="2" Orientation="Vertical">
+                <!--登录按钮-->
+                <Button
+                    Margin="15"
+                    Content="登录"
+                    Name="Button_login"
+                    Click="Button_Click_login"
+                    Width="150" Height="43"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    materialDesign:ButtonProgressAssist.Value="-1"
+                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                 />
+                
+                <!--分割线-->
+                <hc:Divider LineStrokeThickness="2" Margin="0,0,0,0" LineStroke="{DynamicResource DarkPrimaryBrush}"/>
+
+                <!--其他功能按钮-->
+                <StackPanel Margin="20" 
+                            Width="200"
+                            Orientation="Horizontal">
+
+                    <!--预留按钮-->
+                    <Button
+                        Height="45"
+                        Name="Button_about"
+                        Click="Button_about_Click"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        materialDesign:ButtonAssist.CornerRadius="5"
+                        ToolTip="关于开发者">
+                        <StackPanel  Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Information" Height="20"/>
+                            <TextBlock
+                            Text="关于" />
+                        </StackPanel>
+                    </Button>
+
+                    <!--退出程序按钮-->
+                    <Button
+                        Margin="47,0,0,0"
+                        Height="45"
+                        Click="Button_Click_exit"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        materialDesign:ButtonAssist.CornerRadius="5"
+                        ToolTip="退出Pandora-Box">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ExitToApp" Height="20" />
+                            <TextBlock
+                            Text="退出" />
+                        </StackPanel>
+                    </Button>
+                    
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+        
+
+
+    </Grid>
+</Window>
