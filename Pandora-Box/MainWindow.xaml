@@ -5,21 +5,499 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pandora_Box"
         xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
+        MouseDown="Window_MouseMove"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800"  >
     <Grid>
-        <!--步骤条Stackpanel-->
-        <StackPanel>
-            <hc:StepBar >
-                <hc:StepBarItem Content="登录" />
-                <hc:StepBarItem Content="选择项目" />
-                <hc:StepBarItem Content="登录" />
-                <hc:StepBarItem Content="登录" />
-            </hc:StepBar>
-        </StackPanel>
+        <Grid>
+            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+
+
+        <!--头部框-->
+        <materialDesign:ColorZone
+            Mode="PrimaryDark"
+            Padding="18">
+            <DockPanel>
+                <!--头部框按钮-->
+                <materialDesign:PopupBox
+                    DockPanel.Dock="Right"
+                    PlacementMode="BottomAndAlignRightEdges">
+                    <StackPanel>
+                        <Button Name="about" Click="about_Click">
+                            <StackPanel Orientation="Horizontal" >
+                                <materialDesign:PackIcon Kind="InformationOutline"/>
+                                <TextBlock>关于我们</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Button Name="logout" Click="logout_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Logout"/>
+                                <TextBlock>退出登录</TextBlock>
+                            </StackPanel>
+                        </Button>
+                        <Separator/>
+                        <Button Name="exit" Click="exit_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PowerStandby"/>
+                                <TextBlock>退出软件</TextBlock>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                    <StackPanel Orientation="Horizontal">
+                        <!--新大陆图标-->
+                        <Image
+                            ToolTip="进入新大陆物联网云"
+                            MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                            Width="120" Height="50"
+                            Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\新大陆logo.png" />
+                        <!--头部标题Stackpanel-->
+                        <StackPanel Orientation="Horizontal" 
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Margin="160,0,0,0"
+                                    >
+                            <!--头部框文字-->
+                            <TextBlock
+                                FontSize="20"
+                        >
+                        欢迎使用智能温度控制系统
+                            </TextBlock>
+                            <!--icon图像-->
+                            <materialDesign:PackIcon 
+                                Width="25" Height="25"
+                                Kind="PackageVariant"  />
+                        </StackPanel>
+                    </StackPanel>
+                    
+            </DockPanel>
+        </materialDesign:ColorZone>
+
+
+        <!--选项卡控件-->
+            <TabControl 
+            Grid.Row="1"
+            Margin="16" 
+            BorderBrush="Black"  BorderThickness="1"
+            TabStripPlacement="Left" 
+            Style="{StaticResource TabControlCapsule}">
+                <!--系统信息-->
+                <TabItem Header="系统信息" IsSelected="True" Height="40">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="5*"/>
+                            </Grid.RowDefinitions>
+
+                            <!--温度值仪表显示-->
+                            <StackPanel
+                                Orientation="Vertical"
+                                Grid.Row="1"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource RegionBrush}"
+                                Margin="150,0,0,0"
+                                >
+                                <hc:CircleProgressBar 
+                                    Name="TemperatureInstrument"
+                                Value="50" 
+                                FontSize="30" 
+                                />
+                                <TextBlock
+                                    FontSize="18"
+                                    Margin="0,10,0,0"
+                                    HorizontalAlignment="Center"
+                                    Text="温度值"
+                                    />
+                            </StackPanel>
+
+                            <!--系统信息选项卡头部文本-->
+                            <StackPanel
+                                Height="50"
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <!--欢迎文本框-->
+                                <TextBlock 
+                                    FontSize="18"
+                                    Text="欢迎用户XXX！"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Name="userinfo"
+                                />
+                                <!--当前时间块-->
+                                <TextBlock
+                                    Margin="170,0,0,0"
+                                    FontSize="18"
+                                    Text="当前时间："
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Name="CurrentTime"
+                                    />
+                            </StackPanel>
+
+                            <!--分割线-->
+                            <Separator
+                                Margin="0,48,0,0"
+                                Background="Black"
+                                />
+
+                            <Grid  Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--状态显示块-->
+                                <StackPanel
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical"
+                                    >
+                                    <!--当前温度显示-->
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                        <Label
+                                            FontSize="18"
+                                            Content="当前温度"
+                                            />
+
+                                        <TextBlock
+                                            Name="CurrentTemperatureDisplay"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="xx℃"
+                                        />
+                                    </StackPanel>
+                                    <!--警示灯状态-->
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                        <Label
+                                            FontSize="18"
+                                            Content="警示灯状态"
+                                            />
+                                        <TextBlock
+                                            Name="WarningLightState"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                    </StackPanel>
+                                    <!--风扇状态显示-->
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                        <Label
+                                            FontSize="18"
+                                            Content="风扇状态"
+                                            />
+                                        <TextBlock
+                                            Name="FanSwitchState"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                    </StackPanel>
+                                    <!--加热器状态显示-->
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                        <Label
+                                            FontSize="18"
+                                            Content="加热器状态"
+                                            />
+                                        <TextBlock
+                                            Name="StateTheHeater"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+                </TabItem>
+
+                <!--相关设置-->
+                <TabItem  Header="相关设置" Height="40" >
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <!--温度阈值文字块-->
+                            <StackPanel
+                                Margin="50"
+                                Orientation="Vertical"
+                                >
+                                <Label
+                                FontSize="22"
+                                HorizontalAlignment="Center"
+                                Content="温度阈值设置"
+                                />
+                                <StackPanel
+                                    Margin="0,16,0,0"
+                                    Orientation="Vertical"
+                                    >
+                                    <!--上限温度值输入框-->
+                                    <TextBox
+                                        Width="200"
+                                        Name="UpperLimitTemperature"
+                                        AcceptsReturn="True"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        materialDesign:HintAssist.Hint="请输入上限温度阈值"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                />
+                                    <!--下限温度值输入框-->
+                                    <TextBox
+                                        Name="LowerLimitTemperature"
+                                        Margin="0,12,0,0"
+                                        Width="200"
+                                        AcceptsReturn="True"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        materialDesign:HintAssist.Hint="请输入下限温度阈值"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                />
+                                </StackPanel>
+                                <StackPanel
+                                    Margin="0,16,0,0"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    >
+                                    <!--确认设置温度阈值按钮-->
+                                    <Button
+                                        Name="TemperatureThresholdSettings"
+                                        Click="TemperatureThresholdSettings_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="确认"
+                                        Margin="2,0" />
+                                    <!--重置温度阈值按钮-->
+                                    <Button
+                                        Name="ResetTemperatureThreshold"
+                                        Click="ResetTemperatureThreshold_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="重置"
+                                        Margin="2,0" />
+                                </StackPanel>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+                </TabItem>
+
+                <!--手动控制-->
+                <TabItem Header="手动控制" Height="40">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <!--风扇控制StackPanel-->
+                            <StackPanel
+                                Grid.Row="0"
+                                HorizontalAlignment="Center"
+                                
+                                Orientation="Horizontal"
+                                >
+                                <Label
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="风扇控制："
+                                    />
+                                <Button
+                                        Name="FanControlOpen"
+                                        Click="FanControlOpen_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="打开"
+                                        Margin="5,0" />
+                                <Button
+                                        Name="FanControlClearance"
+                                        Click="FanControlClearance_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="关闭"
+                                        Margin="5,0" />
+                            </StackPanel>
+
+                            <!--加热器控制StackPanel-->
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Center"
+                                
+                                Orientation="Horizontal"
+                                >
+                                <Label
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="加热器控制："
+                                    />
+                                <Button
+                                        Name="HeaterControlOpen"
+                                        Click="HeaterControlOpen_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="打开"
+                                        Margin="5,0" />
+                                <Button
+                                        Name="HeaterControlShut"
+                                        Click="HeaterControlShut_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="关闭"
+                                        Margin="5,0" />
+                            </StackPanel>
+                            <!--舵机控制StackPanel-->
+                            <StackPanel
+                                Grid.Row="2"
+                                HorizontalAlignment="Center"
+                                
+                                Orientation="Horizontal"
+                                >
+                                <Label
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Content="舵机控制："
+                                    />
+                                <TextBox
+                                        Name="SteeringGearRotationAngle"
+                                        Width="150"
+                                        Height="40"
+                                        AcceptsReturn="True"
+                                        TextWrapping="Wrap"
+                                        VerticalScrollBarVisibility="Auto"
+                                        materialDesign:HintAssist.Hint="请输入旋转角度"
+                                        Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                                />
+                                <Button
+                                        Name="SteeringLeft"
+                                        Click="SteeringLeft_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="左转"
+                                        Margin="5,0" />
+                                <Button
+                                        Name="SteeringGearRight"
+                                        Click="SteeringGearRight_Click"
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="右转"
+                                        Margin="5,0" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </TabItem>
+
+                <!--历史情况-->
+                <TabItem Header="历史情况"  Height="40">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <!--动态图表-->
+                            <lvc:CartesianChart 
+                                Width="500" Height="300"
+                                HorizontalAlignment="Left"
+                                Name="mychart" Series="{Binding SeriesCollection}"  >
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="时间"
+                                        Labels="{Binding Labels}"
+                                        Name="myAxisX"
+                                        ></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis  
+                                        Title="温度"
+                                        Name="myAxisY"
+                                        MaxValue="10"
+                                        MinValue="0"
+                                        ></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                            <!--动态图标操作按钮-->
+                            <StackPanel
+                                Width="150"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                >
+                                <Button
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="保存"
+                                        Margin="5,0" />
+                                <Button
+                                        Style="{StaticResource MaterialDesignRaisedButton}"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Content="读取"
+                                        Margin="5,0" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </TabItem>
+            </TabControl>
+        </Grid>
+        
+        <!--来自MaterialDesign的提示框-->
+        <materialDesign:Snackbar
+            MessageQueue="{materialDesign:MessageQueue}"
+            x:Name="Snackbar" />
+        <!--来自MaterialDesign的对话框-->
+        <materialDesign:DialogHost  Identifier="RootDialog"/>
         
     </Grid>
 </Window>

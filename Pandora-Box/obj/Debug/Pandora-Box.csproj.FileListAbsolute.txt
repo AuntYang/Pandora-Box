@@ -30,3 +30,16 @@ C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\Materi
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\MaterialDesignColors.pdb
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\SampleMessageDialog.g.cs
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\SampleMessageDialog.baml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\CloudPlatformInfo.dll
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\NLECloudSDK.dll
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\Newtonsoft.Json.dll
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\CloudPlatformInfo.pdb
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\NLECloudSDK.pdb
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.dll
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.pdb
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.xml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.Wpf.xml

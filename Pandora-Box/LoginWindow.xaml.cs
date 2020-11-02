@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NLECloudSDK;
+using CloudPlatformInfo;
 
 namespace Pandora_Box
 {
@@ -54,30 +56,81 @@ namespace Pandora_Box
             Application.Current.Shutdown();
         }
 
-        
-        #endregion
-
-
-        private void Button_Click_login(object sender, RoutedEventArgs e)
-        {//“登录”按钮
-
-            #region --账号密码判空提示--
-            if (username.Text == "")
-            {
-                Growl.Warning("账号不能为空！");
-            };
-            if(password.Password == "")
-            {
-                Growl.Warning("密码不能为空！");
-            }
-            #endregion
-
-
-        }
-
         private void Button_about_Click(object sender, RoutedEventArgs e)
         {//“关于我们”按钮
             HandyControl.Controls.MessageBox.Info("开发者：\nAndroid：胡凯元\nSTM32：张乐\nC#：付准", "你好！用户");
         }
+
+        #endregion
+
+        #region --登录按钮点击事件--
+        private void Button_Click_login(object sender, RoutedEventArgs e)
+        {//“登录”按钮
+
+            #region --账号密码判空提示--
+            if(username.Text == ""|| password.Password == "")
+            {
+                if (username.Text == "")
+                {
+                    Growl.Warning("账号不能为空！");
+                }
+                if (password.Password == "")
+                {
+                    Growl.Warning("密码不能为空！");
+                }
+            }
+            else
+            {
+                LoginAuthentication();
+            }
+            /*
+            if (username.Text == "")
+            {
+                Growl.Warning("账号不能为空！");
+            }
+            else
+            {
+                LoginAuthentication();
+            }
+            if(password.Password == "")
+            {
+                Growl.Warning("密码不能为空！");
+            }
+            else
+            {
+                LoginAuthentication();
+            }
+            */
+
+            #endregion
+
+
+        }
+        #endregion
+
+        #region --登录验证函数--
+        private void LoginAuthentication()
+        {
+            
+            AccountLoginDTO accountLoginDTO = new AccountLoginDTO();//实例化
+            {//将账号密码传入云平台做登录验证
+                accountLoginDTO.Account = username.Text;
+                accountLoginDTO.Password = password.Password;
+            }
+            bool islogin = ForLogin.UserLogin(accountLoginDTO);
+            if (islogin)
+            {//返回值判断登录是否成功
+                HandyControl.Controls.MessageBox.Info("登陆成功，欢迎使用本系统！", "登录成功");//登录成功提示框
+                TempInfo.Username = ForLogin.UserInfo(accountLoginDTO);
+                new MainWindow().Show();//显示系统主窗口
+                this.Close();//本窗口关闭
+            }
+            else
+            {
+                HandyControl.Controls.MessageBox.Info("登陆失败，请重试！", "登录失败");//登录失败提示框
+            }
+        }
+        #endregion
+
     }
 }

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qhuNxWCVJy5T1eI3DK5Vq0xeb61KJLdsZCKPSoQnVCVCS2YFDCqVA7s8NLLVNn0RpU2EUU+IkQixZCzOGugSng==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\付准\\Desktop\\物联网大赛\\Pandora-Box\\CloudPlatformInfo\\CloudPlatformInfo.csproj",
+  "expectedPackageFiles": [
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\付准\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

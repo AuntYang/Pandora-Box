@@ -28,7 +28,7 @@
             <Border Background="{DynamicResource PrimaryBrush}">
                 <!--大图像-->
                 <hc:ImageBlock
-                    Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\咖啡买卖.png"
+                    Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\3D电影.png"
                 />
             </Border>
         </Border>
@@ -46,7 +46,7 @@
                 <RowDefinition  Height="*"/>
                 <RowDefinition  Height="1.8*"/>
             </Grid.RowDefinitions>
-            
+
             <!--包含图标stackpanel和文字textblock的stackpanel（有利于布局）-->
             <StackPanel Orientation="Vertical" >
                 <!--登录板块图标-->
@@ -61,9 +61,10 @@
                         Source="C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\resource\院徽.png"
                          />
                     </Border>
-                    <!--分割线-->
                     
+                    <!--分割线-->
                     <hc:Divider LineStrokeThickness="2" LineStroke="{DynamicResource WarningBrush}" Orientation="Vertical" MaxHeight="60"/>
+                    
                     <!--新大陆图标-->
                     <Border
                     Width="100"
@@ -78,10 +79,10 @@
                 <!--标题文字-->
                 <TextBlock 
                         Margin="-15"
-                        Text="登录到Pandora-Box" 
+                        Text="智能温度控制系统" 
                         Style="{StaticResource TextBlockLargeBold}"/>
             </StackPanel>
-            
+
             <!--账号密码框Stackpanel-->
             <StackPanel Grid.Row="1"  
                         HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -105,7 +106,7 @@
                     materialDesign:HintAssist.Hint="请输入密码"
                     />
             </StackPanel>
-            
+
             <!--按钮Stackpanel-->
             <StackPanel  Grid.Row="2" Orientation="Vertical">
                 <!--登录按钮-->
@@ -120,7 +121,7 @@
                     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                  />
-                
+
                 <!--分割线-->
                 <hc:Divider LineStrokeThickness="2" Margin="0,0,0,0" LineStroke="{DynamicResource DarkPrimaryBrush}"/>
 
@@ -158,13 +159,12 @@
                             Text="退出" />
                         </StackPanel>
                     </Button>
-                    
+
                 </StackPanel>
+                
             </StackPanel>
-
+            
         </Grid>
-        
-
 
     </Grid>
 </Window>
