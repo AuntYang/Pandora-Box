@@ -17,12 +17,12 @@
         <Grid>
             
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1.2*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
 
 
-        <!--头部框-->
+            <!--头部框-->
         <materialDesign:ColorZone
             Mode="PrimaryDark"
             Padding="18">
@@ -89,6 +89,7 @@
             BorderBrush="Black"  BorderThickness="1"
             TabStripPlacement="Left" 
             Style="{StaticResource TabControlCapsule}">
+                
                 <!--系统信息-->
                 <TabItem Header="系统信息" IsSelected="True" Height="40">
                     <Border BorderBrush="Black" BorderThickness="1">
@@ -300,10 +301,7 @@
                                     <Button
                                         Name="TemperatureThresholdSettings"
                                         Click="TemperatureThresholdSettings_Click"
-                                        Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
                                         Content="确认"
                                         Margin="2,0" />
                                     <!--重置温度阈值按钮-->
@@ -311,9 +309,6 @@
                                         Name="ResetTemperatureThreshold"
                                         Click="ResetTemperatureThreshold_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="重置"
                                         Margin="2,0" />
                                 </StackPanel>
@@ -348,18 +343,12 @@
                                         Name="FanControlOpen"
                                         Click="FanControlOpen_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="打开"
                                         Margin="5,0" />
                                 <Button
                                         Name="FanControlClearance"
                                         Click="FanControlClearance_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="关闭"
                                         Margin="5,0" />
                             </StackPanel>
@@ -380,18 +369,12 @@
                                         Name="HeaterControlOpen"
                                         Click="HeaterControlOpen_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="打开"
                                         Margin="5,0" />
                                 <Button
                                         Name="HeaterControlShut"
                                         Click="HeaterControlShut_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="关闭"
                                         Margin="5,0" />
                             </StackPanel>
@@ -421,18 +404,12 @@
                                         Name="SteeringLeft"
                                         Click="SteeringLeft_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="左转"
                                         Margin="5,0" />
                                 <Button
                                         Name="SteeringGearRight"
                                         Click="SteeringGearRight_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="右转"
                                         Margin="5,0" />
                             </StackPanel>
@@ -441,55 +418,68 @@
                 </TabItem>
 
                 <!--历史情况-->
-                <TabItem Header="历史情况"  Height="40">
+                <TabItem Name="History" Header="历史情况"  Height="40" >
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid>
-                            <!--动态图表-->
-                            <lvc:CartesianChart 
+                            
+                            <StackPanel
+                                Orientation="Horizontal"
+                                >
+               
+                                <!--动态图表-->
+                                <lvc:CartesianChart 
+                                    
+                                    Margin="0,0,30,0"
                                 Width="500" Height="300"
-                                HorizontalAlignment="Left"
+                                HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                 Name="mychart" Series="{Binding SeriesCollection}"  >
-                                <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Title="时间"
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Title="时间"
                                         Labels="{Binding Labels}"
                                         Name="myAxisX"
                                         ></lvc:Axis>
-                                </lvc:CartesianChart.AxisX>
-                                <lvc:CartesianChart.AxisY>
-                                    <lvc:Axis  
+                                    </lvc:CartesianChart.AxisX>
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis  
                                         Title="温度"
                                         Name="myAxisY"
-                                        MaxValue="10"
+                                        MaxValue="40"
                                         MinValue="0"
                                         ></lvc:Axis>
-                                </lvc:CartesianChart.AxisY>
-                            </lvc:CartesianChart>
-                            <!--动态图标操作按钮-->
-                            <StackPanel
+                                    </lvc:CartesianChart.AxisY>
+                                </lvc:CartesianChart>
+                                <!--动态图标操作按钮-->
+                                <StackPanel
                                 Width="150"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Orientation="Vertical"
                                 >
-                                <Button
+                                    <Button
+                                    Name="ChartToSave"
+                                    Click="ChartToSave_Click"
                                         Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                                         Content="保存"
                                         Margin="5,0" />
-                                <Button
-                                        Style="{StaticResource MaterialDesignRaisedButton}"
-                                        materialDesign:ButtonProgressAssist.Value="-1"
-                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-                                        Content="读取"
-                                        Margin="5,0" />
+                                    <Button
+                                    Name="ReadChart"
+                                    Click="ReadChart_Click"
+                                    Content="读取"
+                                    Margin="5,15,5,0"
+                                    Style="{StaticResource MaterialDesignRaisedButton}"
+                                     />
+                                </StackPanel>
                             </StackPanel>
+
                         </Grid>
                     </Border>
                 </TabItem>
             </TabControl>
+            <!--消息通知容器-->
+            <ScrollViewer Grid.Row="0"  VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
+                <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
+            </ScrollViewer>
         </Grid>
         
         <!--来自MaterialDesign的提示框-->
@@ -499,6 +489,7 @@
         <!--来自MaterialDesign的对话框-->
         <materialDesign:DialogHost  Identifier="RootDialog"/>
         
+
     </Grid>
 </Window>
     

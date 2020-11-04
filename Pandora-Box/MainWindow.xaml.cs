@@ -17,20 +17,32 @@ using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Threading;
 using CloudPlatformInfo;
+using HandyControl.Controls;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace Pandora_Box
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
+
+        #region --参数设置--
+        public SeriesCollection SeriesCollection { get; set; }//存放
+        public List<string> Labels { get; set; } = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };//横坐标,存放图表x轴数据
+
+        private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };//横坐标初始值
+
         public MainWindow()
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+            livechart();
             userinfo.Text = "欢迎用户:" + TempInfo.Username;//显示当前用户信息
         }
+        #endregion
 
         #region --定时器--
         DispatcherTimer time;//实例化一个定时器
@@ -40,10 +52,40 @@ namespace Pandora_Box
             time = new DispatcherTimer();
             time.Interval = TimeSpan.FromSeconds(1);
             time.Tick += CurrentTimeBlock;
-            //time.Tick += livechart;
+            time.Tick += linestart;
             time.Start();
 
         }
+        #endregion
+
+        #region --动态图表--
+        public void livechart()
+        {//创建折线图函数
+            LineSeries mylineseries = new LineSeries();
+            mylineseries.Title = "当前温度";
+            //mylineseries.LineSmoothness = 0;//折线图直线形式
+            //mylineseries.PointGeometry = null;//折线图的无点样式
+            Labels = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };
+            mylineseries.Values = new ChartValues<int>(temp);
+            myAxisX.Separator.Step = 1;//设置轴间距，设置为0.5时数值1分为两格
+            //myAxisY.Separator.Step = 1;
+            SeriesCollection = new SeriesCollection { };
+            SeriesCollection.Add(mylineseries);
+            linestart(null, null);
+            DataContext = this;
+        }
+
+        public void linestart(object sender, EventArgs e)
+        {//折线图绘制函数
+            
+            Labels.Add(DateTime.Now.ToString("HH:mm:s"));
+            Labels.RemoveAt(0);
+
+            SeriesCollection[0].Values.Add(MainBusiness.currentTemp());
+            SeriesCollection[0].Values.RemoveAt(0);
+        }
+
+
         #endregion
 
         #region --状态显示--
@@ -62,6 +104,7 @@ namespace Pandora_Box
             }
             FanSwitchState.Text = MainBusiness.FanSwitchState();//显示风扇开关状态
             StateTheHeater.Text = MainBusiness.HeaterSwitch();//显示加热器开关状态
+
         }
         #endregion
 
@@ -139,32 +182,51 @@ namespace Pandora_Box
         private void FanControlOpen_Click(object sender, RoutedEventArgs e)
         {//控制风扇开按钮
             MainBusiness.fanOpenOrShut(1);
+            Growl.Success("打开风扇指令发送成功");
         }
 
         private void FanControlClearance_Click(object sender, RoutedEventArgs e)
         {//控制风扇关按钮
             MainBusiness.fanOpenOrShut(0);
+            Growl.Success("关闭风扇指令发送成功");
         }
 
         private void HeaterControlOpen_Click(object sender, RoutedEventArgs e)
         {//控制加热器开按钮
             MainBusiness.heaterOpenOrShut(1);
+            Growl.Success("打开加热器指令发送成功");
         }
 
         private void HeaterControlShut_Click(object sender, RoutedEventArgs e)
         {//控制加热器关按钮
+
             MainBusiness.heaterOpenOrShut(0);
+            Growl.Success("关闭加热器指令发送成功");
         }
 
         private void SteeringLeft_Click(object sender, RoutedEventArgs e)
         {//舵机左转按钮
-            MainBusiness.SteeringLeft(int.Parse(SteeringGearRotationAngle.Text));//传入角度
+            MainBusiness.SteeringLeft(SteeringGearRotationAngle.Text);//传入角度
+            Growl.Success("舵机转向指令发送成功，角度："+ SteeringGearRotationAngle.Text+"°");
         }
 
         private void SteeringGearRight_Click(object sender, RoutedEventArgs e)
         {//舵机右转按钮
-            MainBusiness.SteeringRight(int.Parse(SteeringGearRotationAngle.Text));//传入角度
+            MainBusiness.SteeringRight(SteeringGearRotationAngle.Text);//传入角度
+            Growl.Success("舵机转向指令发送成功，角度：" + SteeringGearRotationAngle.Text + "°");
+        }
+
+        private void ChartToSave_Click(object sender, RoutedEventArgs e)
+        {//保存图表按钮
+
+        }
+
+        private void ReadChart_Click(object sender, RoutedEventArgs e)
+        {//读取图表按钮
+
         }
         #endregion
+
+
     }
 }

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Release\
 Pandora_Box
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\App.xaml
 3546704609
 
-8-464368869
-21-284761609
+8-699588334
+21-557069327
 LoginWindow.xaml;MainWindow.xaml;SampleMessageDialog.xaml;
 
 True

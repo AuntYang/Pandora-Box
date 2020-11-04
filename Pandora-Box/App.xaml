@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Pandora_Box"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
@@ -13,6 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Path" BasedOn="{x:Null}"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

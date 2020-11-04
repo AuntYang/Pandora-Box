@@ -45,13 +45,13 @@ namespace CloudPlatformInfo
             return null;
         }
 
-        public static ActuatorAddUpdate SteeringLeft(int a)
+        public static ActuatorAddUpdate SteeringLeft(string a)
         {//舵机左转，参数为角度
             var yxh = SDK.Cmds(TempInfo.deviceid, "angle", a, TempInfo.Token);
             return null;
         }
 
-        public static ActuatorAddUpdate SteeringRight(int a)
+        public static ActuatorAddUpdate SteeringRight(string a)
         {//舵机右转，参数为角度
             var yxh = SDK.Cmds(TempInfo.deviceid, "angle2", a, TempInfo.Token);
             return null;
