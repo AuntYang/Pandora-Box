@@ -12,7 +12,7 @@ namespace CloudPlatformInfo
         public static String API_HOST = "http://api.nlecloud.com";
         public static string Username;
         //ApplicationSettings.Get("ApiHost");
-        public static int deviceid = 113177;//设备标识
+        public static int deviceid = 143670;//设备标识
         public static String Token;//登录成功后返回的Token
     }
 }

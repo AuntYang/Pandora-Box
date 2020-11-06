@@ -18,7 +18,6 @@ namespace CloudPlatformInfo
         {//开始取号
             var yxh = SDK.Cmds(TempInfo.deviceid, "bool_work",1, TempInfo.Token);
             return null;
-
         }
 
         public static ActuatorAddUpdate Stop()
@@ -88,14 +87,13 @@ namespace CloudPlatformInfo
 
         public static string FanSwitchState()
         {//风扇开关状态
-            var yxh = SDK.GetSensorInfo(TempInfo.deviceid, "fengshan", TempInfo.Token);
-            
+            var yxh = SDK.GetSensorInfo(TempInfo.deviceid, "fan", TempInfo.Token);
             return yxh.ResultObj.Value.ToString();
         }
 
         public static string HeaterSwitch()
         {//加热器开关状态
-            var yxh = SDK.GetSensorInfo(TempInfo.deviceid, "deng", TempInfo.Token);
+            var yxh = SDK.GetSensorInfo(TempInfo.deviceid, "LightSwitch", TempInfo.Token);
             return yxh.ResultObj.Value.ToString();
         }
 

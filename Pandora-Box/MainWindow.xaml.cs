@@ -29,6 +29,7 @@ namespace Pandora_Box
     public partial class MainWindow : System.Windows.Window
     {
 
+
         #region --参数设置--
         public SeriesCollection SeriesCollection { get; set; }//存放
         public List<string> Labels { get; set; } = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };//横坐标,存放图表x轴数据
@@ -41,7 +42,10 @@ namespace Pandora_Box
             this.Loaded += MainWindow_Loaded;
             livechart();
             userinfo.Text = "欢迎用户:" + TempInfo.Username;//显示当前用户信息
+
         }
+
+
         #endregion
 
         #region --定时器--
@@ -102,8 +106,27 @@ namespace Pandora_Box
             {
                 WarningLightState.Text = "关";
             }
-            FanSwitchState.Text = MainBusiness.FanSwitchState();//显示风扇开关状态
-            StateTheHeater.Text = MainBusiness.HeaterSwitch();//显示加热器开关状态
+            if(MainBusiness.FanSwitchState() == "1")
+            {
+                FanSwitchState.Text = "开";//显示风扇开关状态
+            }
+            else
+            {
+                FanSwitchState.Text = "关";//显示风扇开关状态
+            }
+            if (MainBusiness.HeaterSwitch() == "1")
+            {
+                StateTheHeater.Text = "开";//显示加热器开关状态
+            }
+            else
+            {
+                StateTheHeater.Text = "关";//显示加热器开关状态
+            }
+            //FanSwitchState.Text = MainBusiness.FanSwitchState();//显示风扇开关状态
+            //测试用：
+            //System.Windows.MessageBox.Show(MainBusiness.FanSwitchState(),"test");
+
+            //StateTheHeater.Text = MainBusiness.HeaterSwitch();//显示加热器开关状态
 
         }
         #endregion
@@ -167,6 +190,7 @@ namespace Pandora_Box
         private void TemperatureThresholdSettings_Click(object sender, RoutedEventArgs e)
         {//修改上下限温度阈值确定按钮
             MainBusiness.MaximumTemperature(UpperLimitTemperature.Text);//上传上限温度
+            
             MainBusiness.MinimumTemperature(LowerLimitTemperature.Text);//上传下限温度
         }
 
