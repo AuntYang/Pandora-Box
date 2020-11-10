@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -20,6 +21,8 @@ using CloudPlatformInfo;
 using HandyControl.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Painter;
+
 
 namespace Pandora_Box
 {
@@ -29,22 +32,38 @@ namespace Pandora_Box
     public partial class MainWindow : System.Windows.Window
     {
 
-
         #region --参数设置--
         public SeriesCollection SeriesCollection { get; set; }//存放
         public List<string> Labels { get; set; } = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };//横坐标,存放图表x轴数据
 
         private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };//横坐标初始值
 
+        UserControl1 UserControl1 = new UserControl1();//实例化进度条导航窗口
+        UserControl2 UserControl2 = new UserControl2();
+        UserControl3 UserControl3 = new UserControl3();
+        UserControl4 UserControl4 = new UserControl4();
+
         public MainWindow()
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+
+            //柱状图
+            MariaSeriesVisibility = true;
+            CharlesSeriesVisibility = true;
+            JohnSeriesVisibility = false;
+            DataContext = this;
+
+            //函数执行
             livechart();
+            RadarMapDraw();
+            RoseDiagramDraw();
+
+            this.Container.Children.Add(UserControl1);
+
             userinfo.Text = "欢迎用户:" + TempInfo.Username;//显示当前用户信息
 
         }
-
 
         #endregion
 
@@ -57,12 +76,60 @@ namespace Pandora_Box
             time.Interval = TimeSpan.FromSeconds(1);
             time.Tick += CurrentTimeBlock;
             time.Tick += linestart;
+            //time.Tick += RadarMapDraw;
+            //time.Tick += RoseDiagramDraw;
             time.Start();
 
         }
         #endregion
 
-        #region --动态图表--
+        #region --柱状图--
+
+        private bool _mariaSeriesVisibility;
+        private bool _charlesSeriesVisibility;
+        private bool _johnSeriesVisibility;
+        public bool MariaSeriesVisibility
+        {
+            get { return _mariaSeriesVisibility; }
+            set
+            {
+                _mariaSeriesVisibility = value;
+                OnPropertyChanged("MariaSeriesVisibility");
+            }
+        }
+
+        public bool CharlesSeriesVisibility
+        {
+            get { return _charlesSeriesVisibility; }
+            set
+            {
+                _charlesSeriesVisibility = value;
+                OnPropertyChanged("CharlesSeriesVisibility");
+            }
+        }
+
+        public bool JohnSeriesVisibility
+        {
+            get { return _johnSeriesVisibility; }
+            set
+            {
+                _johnSeriesVisibility = value;
+                OnPropertyChanged("JohnSeriesVisibility");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        #endregion
+
+        #region --折线图--
         public void livechart()
         {//创建折线图函数
             LineSeries mylineseries = new LineSeries();
@@ -81,24 +148,54 @@ namespace Pandora_Box
 
         public void linestart(object sender, EventArgs e)
         {//折线图绘制函数
-            
+
             Labels.Add(DateTime.Now.ToString("HH:mm:s"));
             Labels.RemoveAt(0);
 
             SeriesCollection[0].Values.Add(MainBusiness.currentTemp());
             SeriesCollection[0].Values.RemoveAt(0);
         }
+        #endregion
 
+        #region --雷达图--
+        private void RadarMapDraw()
+        {
+            //if (RadarTab.IsSelected == true)
+            //{
+                RadarControl rdc = new RadarControl() { MoreGraphics = true, AreaBrush = Brushes.Black, RadarNetBrush = Brushes.Black, AreaPointBrush = Brushes.Orange, BorderBrush = Brushes.Gray, RadarNetBrushes = new List<Brush> { Brushes.LightSkyBlue, Brushes.Violet } };
+                this.RadarMap.Children.Clear();
+                this.RadarMap.Children.Add(rdc);
+                List<RadarObj>[] lst = { CrData(), CrData() };
+                rdc.SetData(lst);
+           // }
+           // else
+            //{
+                //this.RadarMap.Children.Clear();
+           /// }
+
+        }
+        #endregion
+
+        #region --玫瑰图--
+        private void RoseDiagramDraw()
+        {
+                NightingaleRose rdc = new NightingaleRose();
+                this.RoseDiagram.Children.Clear();
+                this.RoseDiagram.Children.Add(rdc);
+                rdc.SetData(CrData()); 
+        }
 
         #endregion
 
         #region --状态显示--
-        private void CurrentTimeBlock(object sender , EventArgs e)
+        private void CurrentTimeBlock(object sender, EventArgs e)
         {//显示当前时间和状态信息
-            CurrentTime.Text = "当前时间："+DateTime.Now;
-            CurrentTemperatureDisplay.Text = MainBusiness.currentTemp()+"℃";//显示当前室温
+            CurrentTime.Text = "当前时间：" + DateTime.Now;
+            CurrentTemperatureDisplay.Text = MainBusiness.currentTemp() + "℃";//显示当前室温
             TemperatureInstrument.Value = MainBusiness.currentTemp();//仪表显示当前室温
-            if(MainBusiness.WarningLightState())
+            TemperatureInstrument.Text = MainBusiness.currentTemp().ToString() + "℃";
+            TemperatureInstrument.FontSize = 30;
+            if (MainBusiness.WarningLightState())
             {//显示警示灯开关状态
                 WarningLightState.Text = "开";
             }
@@ -106,7 +203,7 @@ namespace Pandora_Box
             {
                 WarningLightState.Text = "关";
             }
-            if(MainBusiness.FanSwitchState() == "1")
+            if (MainBusiness.FanSwitchState() == "1")
             {
                 FanSwitchState.Text = "开";//显示风扇开关状态
             }
@@ -190,7 +287,7 @@ namespace Pandora_Box
         private void TemperatureThresholdSettings_Click(object sender, RoutedEventArgs e)
         {//修改上下限温度阈值确定按钮
             MainBusiness.MaximumTemperature(UpperLimitTemperature.Text);//上传上限温度
-            
+
             MainBusiness.MinimumTemperature(LowerLimitTemperature.Text);//上传下限温度
         }
 
@@ -231,7 +328,7 @@ namespace Pandora_Box
         private void SteeringLeft_Click(object sender, RoutedEventArgs e)
         {//舵机左转按钮
             MainBusiness.SteeringLeft(SteeringGearRotationAngle.Text);//传入角度
-            Growl.Success("舵机转向指令发送成功，角度："+ SteeringGearRotationAngle.Text+"°");
+            Growl.Success("舵机转向指令发送成功，角度：" + SteeringGearRotationAngle.Text + "°");
         }
 
         private void SteeringGearRight_Click(object sender, RoutedEventArgs e)
@@ -242,15 +339,80 @@ namespace Pandora_Box
 
         private void ChartToSave_Click(object sender, RoutedEventArgs e)
         {//保存图表按钮
-
+            
         }
 
         private void ReadChart_Click(object sender, RoutedEventArgs e)
         {//读取图表按钮
 
         }
+
         #endregion
 
+        #region --模拟数据--
+        Random rdm = new Random();
+
+        private List<RadarObj> CrData()
+        {
+            List<RadarObj> list = new List<RadarObj>();
+            list.Add(new RadarObj() { Name = "A", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "B", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "C", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "D", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "E", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "F", DataValue = rdm.Next(20, 100) });
+            list.Add(new RadarObj() { Name = "F", DataValue = rdm.Next(20, 100) });
+            return list;
+        }
+
+        #endregion
+
+        #region --进度条按钮--
+        private void PreviousStep_Click(object sender, RoutedEventArgs e)
+        {
+            this.Container.Children.Clear();
+            if (stepbar.StepIndex == 1)
+            {
+                this.Container.Children.Add(UserControl1);
+            }
+            if (stepbar.StepIndex == 2)
+            {
+                this.Container.Children.Add(UserControl2);
+            }
+            if (stepbar.StepIndex == 3)
+            {
+                this.Container.Children.Add(UserControl3);
+            }
+            pagenum.Text = "当前页数：" + stepbar.StepIndex;
+            stepbar.StepIndex -= 1;
+            
+        }
+
+        private void NextStep_Click(object sender, RoutedEventArgs e)
+        {
+            
+            this.Container.Children.Clear();
+            if(stepbar.StepIndex == 0)
+            {
+                this.Container.Children.Add(UserControl2);
+            }
+            if (stepbar.StepIndex == 1)
+            {
+                this.Container.Children.Add(UserControl3);
+            }
+            if (stepbar.StepIndex == 2)
+            {
+                this.Container.Children.Add(UserControl4);
+            }
+            if (stepbar.StepIndex == 3)
+            {
+                SystemInfo.IsSelected = true;
+            }
+            pagenum.Text = "当前页数：" + stepbar.StepIndex;
+            stepbar.StepIndex += 1;
+        }
+
+        #endregion
 
     }
 }

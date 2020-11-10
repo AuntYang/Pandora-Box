@@ -90,6 +90,18 @@
     <Compile Include="SampleMessageDialog.xaml.cs">
       <DependentUpon>SampleMessageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl2.xaml.cs">
+      <DependentUpon>UserControl2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl3.xaml.cs">
+      <DependentUpon>UserControl3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl4.xaml.cs">
+      <DependentUpon>UserControl4.xaml</DependentUpon>
+    </Compile>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +122,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SampleMessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl4.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +179,10 @@
     <Resource Include="resource\院徽.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\WPF-NightingaleRose-Radar-master\Painter\Painter.csproj">
+      <Project>{ef4c6b12-4f46-4402-8b30-c0c0ac2ee3d8}</Project>
+      <Name>Painter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CloudPlatformInfo\CloudPlatformInfo.csproj">
       <Project>{665ef0dc-6117-4633-bf45-4c118b5842af}</Project>
       <Name>CloudPlatformInfo</Name>

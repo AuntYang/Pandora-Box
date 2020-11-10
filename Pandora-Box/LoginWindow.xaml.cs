@@ -132,5 +132,9 @@ namespace Pandora_Box
         }
         #endregion
 
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

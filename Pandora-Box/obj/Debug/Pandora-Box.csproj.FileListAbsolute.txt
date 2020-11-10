@@ -43,3 +43,13 @@ C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCh
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.xml
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\Painter.exe
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\bin\Debug\Painter.pdb
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl1.g.cs
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl2.g.cs
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl1.baml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl2.baml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl3.g.cs
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl4.g.cs
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl3.baml
+C:\Users\付准\Desktop\物联网大赛\Pandora-Box\Pandora-Box\obj\Debug\UserControl4.baml

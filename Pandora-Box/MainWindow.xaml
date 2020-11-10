@@ -13,6 +13,9 @@
         MouseDown="Window_MouseMove"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800"  >
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="bvc"></BooleanToVisibilityConverter>
+    </Window.Resources>
     <Grid>
         <Grid>
 
@@ -90,8 +93,43 @@
             TabStripPlacement="Left" 
             Style="{StaticResource TabControlCapsule}">
 
+                <!--用户须知-->
+                <TabItem Header="用户须知"  Height="40" IsSelected="True">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <StackPanel Orientation="Vertical">
+                                <hc:StepBar Name="stepbar" Margin="0 20 0 0" StepIndex="{Binding StepIndex1}">
+                                    <hc:StepBarItem Content="选择项目"/>
+                                    <hc:StepBarItem Content="创建数据库"/>
+                                    <hc:StepBarItem Content="使用导引"/>
+                                    <hc:StepBarItem Content="开始使用"/>
+                                </hc:StepBar>
+
+                                <TextBlock x:Name="pagenum"  Text="当前页数"/>
+
+                                <Grid Name="Container" Width="688" Height="150"/>
+
+                                <StackPanel Margin="0,20"  Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button
+                                    Name="PreviousStep"
+                                    Click="PreviousStep_Click"
+                                    Width="180" Content="上一步" 
+                                    Style="{StaticResource ButtonPrimary}"/>
+                                    <Button  
+                                    Name="NextStep"
+                                    Click="NextStep_Click"
+                                    Width="180" Margin="15,0,0,0" Content="下一步"
+                                    Style="{StaticResource ButtonPrimary}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+ 
+                    </Border>
+                </TabItem>
+                
+                
                 <!--系统信息-->
-                <TabItem Header="系统信息" IsSelected="True" Height="40">
+                <TabItem Name="SystemInfo" Header="系统信息"  Height="40">
 
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid>
@@ -99,30 +137,130 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="5*"/>
                             </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                            <!--温度值仪表显示-->
-                            <StackPanel
+                                <UniformGrid Grid.Column="1" >
+                                    <!--状态显示块-->
+                                    <StackPanel
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical"
+                                    >
+                                        <!--当前温度显示-->
+                                        <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                            <Label
+                                            FontSize="18"
+                                            Content="当前温度"
+                                            />
+
+                                            <TextBlock
+                                            Name="CurrentTemperatureDisplay"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="xx℃"
+                                        />
+                                        </StackPanel>
+                                        
+                                        <!--警示灯状态-->
+                                        <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                            <Label
+                                            FontSize="18"
+                                            Content="警示灯状态"
+                                            />
+                                            <TextBlock
+                                            Name="WarningLightState"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                        </StackPanel>
+                                        
+                                        <!--风扇状态显示-->
+                                        <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                            <Label
+                                            FontSize="18"
+                                            Content="风扇状态"
+                                            />
+                                            <TextBlock
+                                            Name="FanSwitchState"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                        </StackPanel>
+                                        
+                                        <!--加热器状态显示-->
+                                        <StackPanel
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        >
+                                            <Label
+                                            FontSize="18"
+                                            Content="加热器状态"
+                                            />
+                                            <TextBlock
+                                            Name="StateTheHeater"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="20,0,0,0"
+                                            FontSize="18"
+                                            Text="开/关"
+                                        />
+                                        </StackPanel>
+                                        
+                                    </StackPanel>
+                                </UniformGrid>
+                                
+                                <!--温度值仪表显示-->
+                                <StackPanel
                                 Orientation="Vertical"
-                                Grid.Row="1"
-                                HorizontalAlignment="Left"
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Background="{DynamicResource RegionBrush}"
-                                Margin="150,0,0,0"
                                 >
-
-                                <hc:CircleProgressBar 
-                                    Name="TemperatureInstrument"
-                                    
-                                    Value="50" 
-                                    FontSize="30" 
+                                    <hc:CircleProgressBar 
+                                        Text="正在获取"
+                                        Name="TemperatureInstrument"
+                                        Value="50" 
+                                        FontSize="20" 
                                 />
-                                <TextBlock
+                                    <TextBlock
                                     FontSize="18"
                                     Margin="0,10,0,0"
                                     HorizontalAlignment="Center"
                                     Text="温度值"
                                     />
-                            </StackPanel>
+                                </StackPanel>
+
+                                
+                            </Grid>
+
+                            
 
                             <!--系统信息选项卡头部文本-->
                             <StackPanel
@@ -155,102 +293,6 @@
                                 Margin="0,48,0,0"
                                 Background="Black"
                                 />
-
-                            <Grid  Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <!--状态显示块-->
-                                <StackPanel
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Orientation="Vertical"
-                                    >
-                                    <!--当前温度显示-->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        >
-                                        <Label
-                                            FontSize="18"
-                                            Content="当前温度"
-                                            />
-
-                                        <TextBlock
-                                            Name="CurrentTemperatureDisplay"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Margin="20,0,0,0"
-                                            FontSize="18"
-                                            Text="xx℃"
-                                        />
-                                    </StackPanel>
-                                    <!--警示灯状态-->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        >
-                                        <Label
-                                            FontSize="18"
-                                            Content="警示灯状态"
-                                            />
-                                        <TextBlock
-                                            Name="WarningLightState"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Margin="20,0,0,0"
-                                            FontSize="18"
-                                            Text="开/关"
-                                        />
-                                    </StackPanel>
-                                    <!--风扇状态显示-->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        >
-                                        <Label
-                                            FontSize="18"
-                                            Content="风扇状态"
-                                            />
-                                        <TextBlock
-                                            Name="FanSwitchState"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Margin="20,0,0,0"
-                                            FontSize="18"
-                                            Text="开/关"
-                                        />
-                                    </StackPanel>
-                                    <!--加热器状态显示-->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        >
-                                        <Label
-                                            FontSize="18"
-                                            Content="加热器状态"
-                                            />
-                                        <TextBlock
-                                            Name="StateTheHeater"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Margin="20,0,0,0"
-                                            FontSize="18"
-                                            Text="开/关"
-                                        />
-                                    </StackPanel>
-
-                                </StackPanel>
-
-                            </Grid>
-
                         </Grid>
                     </Border>
                 </TabItem>
@@ -428,31 +470,93 @@
                             <StackPanel
                                 Orientation="Horizontal"
                                 >
-                                <!--动态图表-->
-                                <lvc:CartesianChart 
-                                    
-                                    Margin="0,0,30,0"
-                                Width="500" Height="300"
-                                HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                Name="mychart" Series="{Binding SeriesCollection}"  >
-                                    <lvc:CartesianChart.AxisX>
-                                        <lvc:Axis Title="时间"
-                                        Labels="{Binding Labels}"
-                                        Name="myAxisX"
-                                        ></lvc:Axis>
-                                    </lvc:CartesianChart.AxisX>
-                                    <lvc:CartesianChart.AxisY>
-                                        <lvc:Axis  
-                                        Title="温度"
-                                        Name="myAxisY"
-                                        MaxValue="40"
-                                        MinValue="0"
-                                        ></lvc:Axis>
-                                    </lvc:CartesianChart.AxisY>
-                                </lvc:CartesianChart>
+                                <TabControl  
+                                    Width="500" Height="326" 
+                                    TabStripPlacement="Bottom"
+                                    Style="{StaticResource TabControlInLine}">
+                                    <TabItem Header="折线图">
+                                        <Border BorderBrush="Black" BorderThickness="1">
+                                            <!--动态折线图-->
+                                            <lvc:CartesianChart 
+                                                Margin="0"
+                                                Width="480" Height="285"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Name="mychart" Series="{Binding SeriesCollection}"  >
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title="时间"
+                                                              Labels="{Binding Labels}"
+                                                              Name="myAxisX"
+                                                        ></lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis  
+                                                        Title="温度"
+                                                        Name="myAxisY"
+                                                        MaxValue="40"
+                                                        MinValue="0"
+                                                        ></lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Border>
+                                    </TabItem>
+                                    <TabItem Header="柱状图" >
+                                        <Border BorderBrush="Black" BorderThickness="1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"></RowDefinition>
+                                                    <RowDefinition Height="*"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <CheckBox IsChecked="{Binding MariaSeriesVisibility}">
+                                                        Maria Series
+                                                    </CheckBox>
+                                                    <CheckBox IsChecked="{Binding CharlesSeriesVisibility}">
+                                                        Charles Series
+                                                    </CheckBox>
+                                                    <CheckBox IsChecked="{Binding JohnSeriesVisibility}">
+                                                        John Series
+                                                    </CheckBox>
+                                                </StackPanel>
+                                                <lvc:CartesianChart Grid.Row="1" Hoverable="False">
+                                                    <lvc:CartesianChart.Series>
+                                                        <lvc:ColumnSeries Title="Maria" Values="4,7,2,9,3" Visibility="{Binding MariaSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" ColumnPadding="0"/>
+                                                        <lvc:ColumnSeries Title="Charles" Values="6,2,6,3,8" Visibility="{Binding CharlesSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" ColumnPadding="0"/>
+                                                        <lvc:ColumnSeries Title="John" Values="7,2,8,3,9" Visibility="{Binding JohnSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" ColumnPadding="0"/>
+                                                    </lvc:CartesianChart.Series>
+                                                    <lvc:CartesianChart.AxisX>
+                                                        <lvc:Axis Labels="January, February, March, April, May">
+                                                            <lvc:Axis.Separator>
+                                                                <lvc:Separator Step="1"></lvc:Separator>
+                                                            </lvc:Axis.Separator>
+                                                        </lvc:Axis>
+                                                    </lvc:CartesianChart.AxisX>
+                                                </lvc:CartesianChart>
+                                            </Grid>
+                                        </Border>
+                                    </TabItem>
+                                    <TabItem Name="RadarTab" Header="雷达图" >
+                                        <Border BorderBrush="Black" BorderThickness="1">
+                                            <Grid x:Name="RadarMap">
+                                                
+                                            </Grid>
+                                        </Border>
+                                    </TabItem>
+
+                                    <TabItem Name="RoseTab" Header="玫瑰图" >
+                                        <Border BorderBrush="Black" BorderThickness="1">
+                                            <Grid Name="RoseDiagram">
+                                                
+                                            </Grid>
+                        
+                                        </Border>
+                                    </TabItem>
+
+                                </TabControl>
+                                
                                 <!--动态图标操作按钮-->
                                 <StackPanel
+                                    Margin="20 0 0 0"
                                 Width="150"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
@@ -477,21 +581,60 @@
                         </Grid>
                     </Border>
                 </TabItem>
+
+                <!--历史数据-->
+                <TabItem Header="历史数据"  Height="40">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <DataGrid 
+                                HeadersVisibility="All"
+                                RowHeaderWidth="60" 
+                                AutoGenerateColumns="False" 
+                                ItemsSource="{Binding DataList}" 
+                                hc:DataGridAttach.ShowRowNumber="True">
+
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Width="60" CanUserResize="False">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Source="{Binding ImgPath}" Width="32" Height="32" Stretch="Uniform"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="时间"/>
+                                    <DataGridCheckBoxColumn Width="100" CanUserResize="False" Binding="{Binding IsSelected}" Header="数据"/>
+                                    <DataGridComboBoxColumn  Width="100" CanUserResize="False" SelectedValueBinding="{Binding Type}" Header="序号"/>
+                                    <DataGridTextColumn Binding="{Binding Remark}" Header=""/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <hc:Pagination MaxPageCount="10" PageIndex="{Binding PageIndex}" IsJumpEnabled="True"/>
+
+                        </StackPanel>
+                    </Border>
+                </TabItem>
+                <!--策略执行-->
+                <TabItem Header="策略执行"  Height="40">
+                    <Border BorderBrush="Black" BorderThickness="1">
+
+                    </Border>
+                </TabItem>
             </TabControl>
 
             <!--消息通知容器-->
             <ScrollViewer Grid.Row="0"  VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
                 <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
             </ScrollViewer>
-        </Grid>
 
-        <!--来自MaterialDesign的提示框-->
-        <materialDesign:Snackbar
+            <!--来自MaterialDesign的提示框-->
+            <materialDesign:Snackbar
             MessageQueue="{materialDesign:MessageQueue}"
             x:Name="Snackbar" />
 
-        <!--来自MaterialDesign的对话框-->
-        <materialDesign:DialogHost  Identifier="RootDialog"/>
+            <!--来自MaterialDesign的对话框-->
+            <materialDesign:DialogHost  Identifier="RootDialog"/>
+        </Grid>
+
+
 
 
     </Grid>
