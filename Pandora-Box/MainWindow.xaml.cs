@@ -22,6 +22,7 @@ using HandyControl.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
 using Painter;
+using WpfApp1;
 
 
 namespace Pandora_Box
@@ -31,7 +32,7 @@ namespace Pandora_Box
     /// </summary>
     public partial class MainWindow : System.Windows.Window
     {
-
+        //Cloud cloud = new Cloud();//引用学长的二次封装代码，声明实例化类
 
         #region --参数设置--
         public SeriesCollection SeriesCollection { get; set; }//存放
@@ -199,7 +200,8 @@ namespace Pandora_Box
                 TemperatureInstrument.Value = MainBusiness.currentTemp();//仪表显示当前室温
                 TemperatureInstrument.Text = MainBusiness.currentTemp().ToString() + "℃";
                 TemperatureInstrument.FontSize = 30;
-
+                
+                
                 if (MainBusiness.WarningLightState())
                 {//显示警示灯开关状态
                     WarningLightState.Text = "开";
