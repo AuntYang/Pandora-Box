@@ -105,8 +105,6 @@
                                     <hc:StepBarItem Content="开始使用"/>
                                 </hc:StepBar>
 
-                                <TextBlock x:Name="pagenum"  Text="当前页数"/>
-
                                 <Grid Name="Container" Width="688" Height="150"/>
 
                                 <StackPanel Margin="0,20"  Orientation="Horizontal" HorizontalAlignment="Center">
@@ -620,20 +618,21 @@
                 </TabItem>
             </TabControl>
 
-            <!--消息通知容器-->
-            <ScrollViewer Grid.Row="0"  VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
-                <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
-            </ScrollViewer>
+            
+        </Grid>
+        
+        <!--消息通知容器-->
+        <ScrollViewer Grid.Row="0"  VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
+            <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
+        </ScrollViewer>
 
-            <!--来自MaterialDesign的提示框-->
-            <materialDesign:Snackbar
+        <!--来自MaterialDesign的提示框-->
+        <materialDesign:Snackbar
             MessageQueue="{materialDesign:MessageQueue}"
             x:Name="Snackbar" />
 
-            <!--来自MaterialDesign的对话框-->
-            <materialDesign:DialogHost  Identifier="RootDialog"/>
-        </Grid>
-
+        <!--来自MaterialDesign的对话框-->
+        <materialDesign:DialogHost  Identifier="RootDialog"/>
 
 
 

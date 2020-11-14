@@ -32,6 +32,7 @@ namespace Pandora_Box
     public partial class MainWindow : System.Windows.Window
     {
 
+
         #region --参数设置--
         public SeriesCollection SeriesCollection { get; set; }//存放
         public List<string> Labels { get; set; } = new List<string> { "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" };//横坐标,存放图表x轴数据
@@ -190,34 +191,47 @@ namespace Pandora_Box
         #region --状态显示--
         private void CurrentTimeBlock(object sender, EventArgs e)
         {//显示当前时间和状态信息
-            CurrentTime.Text = "当前时间：" + DateTime.Now;
-            CurrentTemperatureDisplay.Text = MainBusiness.currentTemp() + "℃";//显示当前室温
-            TemperatureInstrument.Value = MainBusiness.currentTemp();//仪表显示当前室温
-            TemperatureInstrument.Text = MainBusiness.currentTemp().ToString() + "℃";
-            TemperatureInstrument.FontSize = 30;
-            if (MainBusiness.WarningLightState())
-            {//显示警示灯开关状态
-                WarningLightState.Text = "开";
-            }
-            else
+            if(MainBusiness.OnlineMonitor())
             {
-                WarningLightState.Text = "关";
+                SystemInfo.IsEnabled = true;//启用状态信息
+                CurrentTime.Text = "当前时间：" + DateTime.Now;
+                CurrentTemperatureDisplay.Text = MainBusiness.currentTemp() + "℃";//显示当前室温
+                TemperatureInstrument.Value = MainBusiness.currentTemp();//仪表显示当前室温
+                TemperatureInstrument.Text = MainBusiness.currentTemp().ToString() + "℃";
+                TemperatureInstrument.FontSize = 30;
+
+                if (MainBusiness.WarningLightState())
+                {//显示警示灯开关状态
+                    WarningLightState.Text = "开";
+                }
+                else
+                {
+                    WarningLightState.Text = "关";
+                }
+
+                //if (MainBusiness.FanSwitchState() == "1")
+                    if (MainBusiness.getsensordata())
+                    {
+                    FanSwitchState.Text = "开";//显示风扇开关状态
+                }
+                else
+                {
+                    FanSwitchState.Text = "关";//显示风扇开关状态
+                }
+
+                if (MainBusiness.HeaterSwitch() == "1")
+                {
+                    StateTheHeater.Text = "开";//显示加热器开关状态
+                }
+                else
+                {
+                    StateTheHeater.Text = "关";//显示加热器开关状态
+                }
             }
-            if (MainBusiness.FanSwitchState() == "1")
+           else
             {
-                FanSwitchState.Text = "开";//显示风扇开关状态
-            }
-            else
-            {
-                FanSwitchState.Text = "关";//显示风扇开关状态
-            }
-            if (MainBusiness.HeaterSwitch() == "1")
-            {
-                StateTheHeater.Text = "开";//显示加热器开关状态
-            }
-            else
-            {
-                StateTheHeater.Text = "关";//显示加热器开关状态
+                SystemInfo.IsEnabled = false;//不启用状态信息
+                SnackbarAll("当前设备不在线！");
             }
             //FanSwitchState.Text = MainBusiness.FanSwitchState();//显示风扇开关状态
             //测试用：
@@ -226,6 +240,8 @@ namespace Pandora_Box
             //StateTheHeater.Text = MainBusiness.HeaterSwitch();//显示加热器开关状态
 
         }
+
+        
         #endregion
 
         #region --界面优化--
@@ -383,7 +399,6 @@ namespace Pandora_Box
             {
                 this.Container.Children.Add(UserControl3);
             }
-            pagenum.Text = "当前页数：" + stepbar.StepIndex;
             stepbar.StepIndex -= 1;
             
         }
@@ -408,7 +423,6 @@ namespace Pandora_Box
             {
                 SystemInfo.IsSelected = true;
             }
-            pagenum.Text = "当前页数：" + stepbar.StepIndex;
             stepbar.StepIndex += 1;
         }
 

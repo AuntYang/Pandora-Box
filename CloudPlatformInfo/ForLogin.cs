@@ -22,13 +22,20 @@ namespace CloudPlatformInfo
                 TempInfo.Token = yxh.ResultObj.AccessToken;
                 return true;
             }
-            return false;
+            else
+            {
+                TempInfo.LoginMsg = yxh.Msg;
+                return false;
+            }
+            
         }
         public static string UserInfo(AccountLoginDTO accountLoginDTO)
         {
             SDK = new NLECloudAPI(TempInfo.API_HOST);
             var yxh = SDK.UserLogin(accountLoginDTO);
+            TempInfo.Username = yxh.ResultObj.UserName;//保存用户名至tempinfo
             return yxh.ResultObj.UserName;//用户信息，根据项目需要修改
+            
         }
         
     }

@@ -109,9 +109,27 @@
 
             <!--按钮Stackpanel-->
             <StackPanel  Grid.Row="2" Orientation="Vertical">
+                
+                <!--忘记密码和注册账号-->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5 0 0">
+                    <TextBlock HorizontalAlignment="Center">
+                        <Hyperlink NavigateUri="http://www.nlecloud.com/my/forget" 
+                                   Click="ForgotPassword_Click"
+                                   Name="ForgotPassword">
+                        忘记密码
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Margin="30 0 0 0">
+                        <Hyperlink NavigateUri="http://www.nlecloud.com/my/register" 
+                                   Name="RegisteredAccount" Click="RegisteredAccount_Click">
+                        注册账号
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                
                 <!--登录按钮-->
                 <Button
-                    Margin="15"
+                    Margin="10"
                     Content="登录"
                     Name="Button_login"
                     Click="Button_Click_login"
@@ -121,7 +139,7 @@
                     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                     materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                  />
-                
+
                 <!--分割线-->
                 <hc:Divider LineStrokeThickness="2" Margin="0,0,0,0" LineStroke="{DynamicResource DarkPrimaryBrush}"/>
 

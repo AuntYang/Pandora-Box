@@ -87,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Device.cs" />
     <Compile Include="SampleMessageDialog.xaml.cs">
       <DependentUpon>SampleMessageDialog.xaml</DependentUpon>
     </Compile>
